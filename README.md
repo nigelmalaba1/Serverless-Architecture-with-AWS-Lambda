@@ -22,6 +22,10 @@ The generated results will have the following structure:
   "entities": ["entity1", "entity2", ...]
 }
 ```
+# Architecture
+
+<img width="1263" alt="serverless" src="https://user-images.githubusercontent.com/123284219/227793727-9118dc78-7b09-41f0-9de7-6f91ee029223.png">
+
 
 # Reference
 Source code: github.com/noahgift/awslambda
