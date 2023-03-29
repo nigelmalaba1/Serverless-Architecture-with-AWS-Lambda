@@ -36,13 +36,13 @@ To build this serverless architecture on AWS from scratch, follow these steps:
 
 Step 1: Create DynamoDB table, SQS queue, S3 bucket & working environment
 
-Open AWS DynamoDB console and create a table called "ffang" (or whatever you want). For the primary key, use "name" with type "string".
+Open AWS DynamoDB console and create a table called "fang". For the primary key, use "name" with type "string".
 
 Click on the newly created table and add items with names like "Apple", "Google", etc.
 
-Open AWS SQS console and create a standard queue called "checkDB" .
+Open AWS SQS console and create a standard queue called "readDB" .
 
-Open AWS S3 console and create a bucket called "faangsentiment".
+Open AWS S3 console and create a bucket called "companysentiment".
 
 Open AWS Cloud9 console, open the IDE of your working environment, create a new directory for this project, and cd into it.
 
@@ -54,11 +54,11 @@ This function reads data from the DynamoDB table and puts messages into the SQS 
 
 In the Cloud9 IDE, click on "AWS", then right-click on "Lambda", and choose to "Create Lambda SAM Application".
 
-For settings of the SAM app, select Python 3.7/3.8 as the runtime, select "AWS SAM Hello World" as the SAM application template, choose the directory to store the files, and name your app "checkDB".
+For settings of the SAM app, select Python 3.7/3.8 as the runtime, select "AWS SAM Hello World" as the SAM application template, choose the directory to store the files, and name your app "readDB".
 
 In the Cloud9 IDE, click on "Environment" and check the file hierarchy. Find your Lambda function's folder and open the sub-folder "hello-world".
 
-Replace "app.py" with the file checkDB/hello_world/app.py from this repository.
+Replace "app.py" with the file readDB/hello_world/app.py from this repository.
 
 Modify app.py, change the name of the DynamoDB table and the name of the SQS queue.
 
