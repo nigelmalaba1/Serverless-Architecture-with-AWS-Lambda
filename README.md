@@ -82,18 +82,18 @@ Deploy the application using SAM guided deployment:
 sam deploy --guided
 ```
 
-# Add Permission
-Access the AWS Lambda console and locate the new app "sam-app" and a new Lambda function named "sam-app-HelloWorldFunction-xxxx". Click on the function, then navigate to "Configuration" > "Permission", and click on the existing role to be directed to the IAM console.
+Step3: Add Permission
 
+* Access the AWS Lambda console and locate the new app "sam-app" and a new Lambda function named "sam-app-HelloWorldFunction-xxxx". Click on the function, then navigate to "Configuration" > "Permission", and click on the existing role to be directed to the IAM console.
 
+* In the new window, click "Attach Policies". On the subsequent page, find the "AdministratorAccess" policy and attach it.
 
-In the new window, click "Attach Policies". On the subsequent page, find the "AdministratorAccess" policy and attach it.
+* Return to the previous Lambda function page in the AWS Lambda console and select "Triggers". Remove the "API Gateway" trigger.
 
-Return to the previous Lambda function page in the AWS Lambda console and select "Triggers". Remove the "API Gateway" trigger.
+* Add a new EventBridge (CloudWatch Events) trigger. For its configuration, create a new rule and name it "OneMinuteTimer" (or any desired name). For the "schedule expression", input "rate(1 minute)".
 
-Add a new EventBridge (CloudWatch Events) trigger. For its configuration, create a new rule and name it "OneMinuteTimer" (or any desired name). For the "schedule expression", input "rate(1 minute)".
+Step 4: Test
 
-# Testing
 You can now enable the trigger and view the messages in the SQS queue.
 
 In the AWS SQS console, click on the "readDBValue" queue, followed by "Send and receive messages", and then "poll for messages".
@@ -101,7 +101,6 @@ In the AWS SQS console, click on the "readDBValue" queue, followed by "Send and 
 In the AWS Lambda console, on the specific function page, click on "Monitor" to find more details about the activity. You can also select "View Logs in CloudWatch".
 
 You have the option to disable the trigger and purge the SQS queue at any time.
-
 
 
 # Consumer Lambda Function
@@ -135,8 +134,7 @@ To successfully write results to S3, modify the timeout for the second Lambda fu
 * Open the second Lambda function's page, click on "Configuration", and then click on "General configuration".
 * Set the timeout to 1 minute.
 
-
-# Testing
+# Test
 
 You can now activate both triggers for the two functions and view the output in the S3 bucket, where you will find a csv file with the sentiment analysis output
 
