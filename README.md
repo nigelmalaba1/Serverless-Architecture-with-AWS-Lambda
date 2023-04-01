@@ -53,6 +53,8 @@ Step 2: Create producer-side Lambda function (triggered by a CloudWatch timer)
 
 This function reads data from the DynamoDB table and puts messages into the SQS queue.
 
+
+
 2.1. Create a SAM application
 
 * In the Cloud9 IDE, click on "AWS", then right-click on "Lambda", and choose to "Create Lambda SAM Application".
@@ -61,11 +63,11 @@ This function reads data from the DynamoDB table and puts messages into the SQS 
 
 * In the Cloud9 IDE, click on "Environment" and check the file hierarchy. Find your Lambda function's folder and open the sub-folder "hello-world".
 
-* Replace "app.py" with the file lambda-checkSQS/hello_world/app.py from this repository.
+* Replace "app.py" with the file lambda-serverless/hello_world/app.py from this repository.
 
 * Modify app.py, change the name of the DynamoDB table and the name of the SQS queue.
 
-* Replace "requirements.txt" with the file lambda-checkSQS/hello_world/requirements.txt from this repository.
+* Replace "requirements.txt" with the file lambda-serverless/hello_world/requirements.txt from this repository.
 
 2.2. Build and deploy
 
@@ -80,8 +82,65 @@ Deploy the application using SAM guided deployment:
 sam deploy --guided
 ```
 
+# Add Permission
+Access the AWS Lambda console and locate the new app "sam-app" and a new Lambda function named "sam-app-HelloWorldFunction-xxxx". Click on the function, then navigate to "Configuration" > "Permission", and click on the existing role to be directed to the IAM console.
+
+
+
+In the new window, click "Attach Policies". On the subsequent page, find the "AdministratorAccess" policy and attach it.
+
+Return to the previous Lambda function page in the AWS Lambda console and select "Triggers". Remove the "API Gateway" trigger.
+
+Add a new EventBridge (CloudWatch Events) trigger. For its configuration, create a new rule and name it "OneMinuteTimer" (or any desired name). For the "schedule expression", input "rate(1 minute)".
+
+# Testing
+You can now enable the trigger and view the messages in the SQS queue.
+
+In the AWS SQS console, click on the "readDBValue" queue, followed by "Send and receive messages", and then "poll for messages".
+
+In the AWS Lambda console, on the specific function page, click on "Monitor" to find more details about the activity. You can also select "View Logs in CloudWatch".
+
+You have the option to disable the trigger and purge the SQS queue at any time.
+
+
+
+# Consumer Lambda Function
+Create a second Lambda function that reads messages from the SQS queue and extracts the company name. It then generates Wikipedia snippets of the name and uses the AWS Comprehend API to conduct sentiment detection, key phrase detection, and entity detection on the snippets. The analysis results are then written to S3. This function is triggered by SQS.
+
+## Create SAM Application
+
+Create a second SAM application named "checkSQS" like the previous one.
+
+Replace "app.py" with the file lambda-checkSQS/hello_world/app.py from this repo.
+
+Modify app.py to update the REGION and bucket name.
+
+Replace "requirements.txt" with the file lambda-checkSQS/hello_world/requirements.txt from this repo.
+
+## Build and Deploy
+
+Run sam build --use-container.
+Run sam deploy --guided.
+
+## Add Permission & Trigger
+
+Add permission and remove the "API Gateway" trigger as done previously.
+
+Add a new SQS trigger with your queue selected and a batch_size of 1.
+
+Modify Lambda Function Timeout. 
+
+To successfully write results to S3, modify the timeout for the second Lambda function:
+
+* Open the second Lambda function's page, click on "Configuration", and then click on "General configuration".
+* Set the timeout to 1 minute.
+
+
 # Testing
 
 You can now activate both triggers for the two functions and view the output in the S3 bucket, where you will find a csv file with the sentiment analysis output
 
 Clear the activity by disabling the triggers and purging the SQS queue
+
+<img width="1083" alt="Screenshot 2023-04-01 at 5 30 30 PM" src="https://user-images.githubusercontent.com/123284219/229314829-d065d820-ecbd-4a46-accb-6834f31c0369.png">
+
