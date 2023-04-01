@@ -61,11 +61,11 @@ This function reads data from the DynamoDB table and puts messages into the SQS 
 
 * In the Cloud9 IDE, click on "Environment" and check the file hierarchy. Find your Lambda function's folder and open the sub-folder "hello-world".
 
-* Replace "app.py" with the file readDBValue/hello_world/app.py from this repository.
+* Replace "app.py" with the file lambda-checkSQS/hello_world/app.py from this repository.
 
 * Modify app.py, change the name of the DynamoDB table and the name of the SQS queue.
 
-* Replace "requirements.txt" with the file readDBValue/hello_world/requirements.txt from this repository.
+* Replace "requirements.txt" with the file lambda-checkSQS/hello_world/requirements.txt from this repository.
 
 2.2. Build and deploy
 
