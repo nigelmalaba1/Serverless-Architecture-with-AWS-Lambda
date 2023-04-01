@@ -77,7 +77,7 @@ Deploy the application using SAM guided deployment:
 sam deploy --guided
 ```
 
-#Result 
+# Result 
 
 <img width="1426" alt="Screenshot 2023-04-01 at 4 49 12 PM" src="https://user-images.githubusercontent.com/123284219/229313465-948c5f48-1ea3-42f6-b670-debe4e69b7fb.png">
 
