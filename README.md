@@ -83,3 +83,5 @@ sam deploy --guided
 # Testing
 
 You can now activate both triggers for the two functions and view the output in the S3 bucket, where you will find a csv file with the sentiment analysis output
+
+Clear the activity by disabling the triggers and purging the SQS queue
